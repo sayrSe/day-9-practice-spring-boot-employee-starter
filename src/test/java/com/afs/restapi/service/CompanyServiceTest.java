@@ -11,8 +11,10 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.mockito.ArgumentMatchers.argThat;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.*;
 
 class CompanyServiceTest {
 
@@ -74,5 +76,17 @@ class CompanyServiceTest {
         assertEquals(foundEmployees.get(0).getAge(), alice.getAge());
         assertEquals(foundEmployees.get(0).getGender(), alice.getGender());
         assertEquals(foundEmployees.get(0).getSalary(), alice.getSalary());
+    }
+
+    @Test
+    void should_delete_one_time_when_delete_given_company_jpa_service_and_active_company() {
+        // Given
+        Company company = new Company(1L, "OOCL");
+
+        // When
+        companyService.delete(company.getId());
+
+        // Then
+        verify(mockedCompanyJPARepository, times(1)).deleteById(company.getId());
     }
 }
