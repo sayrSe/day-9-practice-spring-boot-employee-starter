@@ -4,8 +4,6 @@ import com.afs.restapi.entity.Company;
 import com.afs.restapi.entity.Employee;
 import com.afs.restapi.repository.CompanyJPARepository;
 import com.afs.restapi.repository.EmployeeJPARepository;
-import com.afs.restapi.repository.InMemoryCompanyRepository;
-import com.afs.restapi.repository.InMemoryEmployeeRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -29,12 +27,6 @@ class CompanyApiTest {
 
     @Autowired
     private MockMvc mockMvc;
-
-    @Autowired
-    private InMemoryCompanyRepository inMemoryCompanyRepository;
-
-    @Autowired
-    private InMemoryEmployeeRepository inMemoryEmployeeRepository;
 
     @Autowired
     private CompanyJPARepository companyJPARepository;
