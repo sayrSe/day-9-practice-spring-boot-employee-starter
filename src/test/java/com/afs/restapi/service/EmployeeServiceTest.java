@@ -12,8 +12,8 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.argThat;
+import static org.mockito.Mockito.*;
 
 class EmployeeServiceTest {
 
@@ -118,5 +118,25 @@ class EmployeeServiceTest {
         EmployeeCreateException employeeCreateException = assertThrows(EmployeeCreateException.class, () ->
                 employeeService.create(employee));
         assertEquals("Employee must be 18~65 years old", employeeCreateException.getMessage());
+    }
+
+    @Test
+    void should_return_updated_employee_when_update_given_employee_age_and_salary() {
+        // Given
+        Employee employee = new Employee(1L, "Lucy", 20, "Female", 3000);
+        Employee updatedEmployeeInfo = new Employee(null, null, 30, null, 10000);
+        when(mockedEmployeeJPARepository.findById(employee.getId())).thenReturn(Optional.of(employee));
+
+        // When
+        employeeService.update(employee.getId(), updatedEmployeeInfo);
+
+        // Then
+        verify(mockedEmployeeJPARepository).save(argThat(tempEmployee -> {
+            assertEquals("Lucy", tempEmployee.getName());
+            assertEquals("Female", tempEmployee.getGender());
+            assertEquals(30, tempEmployee.getAge());
+            assertEquals(10000, tempEmployee.getSalary());
+            return true;
+        }));
     }
 }
