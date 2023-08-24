@@ -161,8 +161,8 @@ class EmployeeServiceTest {
         int pageNumber = 1;
         int pageSize = 1;
         Employee alice = new Employee(null, "Alice", 24, "Female", 9000);
-        Page<Employee> secondEmployee = new PageImpl<>(List.of(alice));
-        when(mockedEmployeeJPARepository.findAll(PageRequest.of(0, pageSize))).thenReturn(secondEmployee);
+        Page<Employee> pagedEmployee = new PageImpl<>(List.of(alice));
+        when(mockedEmployeeJPARepository.findAll(PageRequest.of(0, pageSize))).thenReturn(pagedEmployee);
 
         // When
         List<Employee> pagedEmployees = employeeService.findByPage(pageNumber, pageSize);
