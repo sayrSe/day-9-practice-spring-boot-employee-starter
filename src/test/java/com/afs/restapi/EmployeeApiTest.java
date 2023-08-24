@@ -3,7 +3,6 @@ package com.afs.restapi;
 import com.afs.restapi.entity.Employee;
 import com.afs.restapi.repository.EmployeeJPARepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +14,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 
@@ -48,11 +48,11 @@ class EmployeeApiTest {
         Optional<Employee> optionalEmployee = employeeJPARepository.findById(previousEmployee.getId());
         assertTrue(optionalEmployee.isPresent());
         Employee updatedEmployee = optionalEmployee.get();
-        Assertions.assertEquals(employeeUpdateRequest.getAge(), updatedEmployee.getAge());
-        Assertions.assertEquals(employeeUpdateRequest.getSalary(), updatedEmployee.getSalary());
-        Assertions.assertEquals(previousEmployee.getId(), updatedEmployee.getId());
-        Assertions.assertEquals(previousEmployee.getName(), updatedEmployee.getName());
-        Assertions.assertEquals(previousEmployee.getGender(), updatedEmployee.getGender());
+        assertEquals(employeeUpdateRequest.getAge(), updatedEmployee.getAge());
+        assertEquals(employeeUpdateRequest.getSalary(), updatedEmployee.getSalary());
+        assertEquals(previousEmployee.getId(), updatedEmployee.getId());
+        assertEquals(previousEmployee.getName(), updatedEmployee.getName());
+        assertEquals(previousEmployee.getGender(), updatedEmployee.getGender());
     }
 
     @Test
