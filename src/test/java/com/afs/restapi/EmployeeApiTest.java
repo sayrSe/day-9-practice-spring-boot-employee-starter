@@ -57,7 +57,7 @@ class EmployeeApiTest {
 
     @Test
     void should_create_employee() throws Exception {
-        Employee employee = getEmployeeBob();
+        Employee employee = employeeJPARepository.save(getEmployeeBob());
 
         ObjectMapper objectMapper = new ObjectMapper();
         String employeeRequest = objectMapper.writeValueAsString(employee);
@@ -65,7 +65,7 @@ class EmployeeApiTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(employeeRequest))
                 .andExpect(MockMvcResultMatchers.status().is(201))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(1L))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(employee.getId()))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.name").value(employee.getName()))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.age").value(employee.getAge()))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.gender").value(employee.getGender()))
