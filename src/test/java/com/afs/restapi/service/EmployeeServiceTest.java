@@ -24,7 +24,7 @@ class EmployeeServiceTest {
     }
 
     @Test
-    void should_return_all_employees_when_get_employees_given_employee_jpa_service() {
+    void should_return_all_employees_when_findAll_given_employee_jpa_service() {
         // Given
         Employee employee = new Employee(1L, "Lucy", 20, "Female", 3000);
         List<Employee> employees = List.of(employee);
