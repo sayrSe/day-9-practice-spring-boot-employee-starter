@@ -131,7 +131,7 @@ class EmployeeApiTest {
     void should_find_employees_by_page() throws Exception {
         Employee employeeZhangsan = employeeJPARepository.save(getEmployeeBob());
         Employee employeeSusan = employeeJPARepository.save(getEmployeeSusan());
-        Employee employeeLisi = employeeJPARepository.save(getEmployeeLily());
+        employeeJPARepository.save(getEmployeeLily());
 
         mockMvc.perform(get("/employees")
                         .param("pageNumber", "1")
