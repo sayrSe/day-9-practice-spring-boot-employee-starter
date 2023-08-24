@@ -6,6 +6,9 @@ import com.afs.restapi.repository.CompanyJPARepository;
 import com.afs.restapi.repository.EmployeeJPARepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 
 import java.util.List;
 import java.util.Optional;
@@ -118,5 +121,22 @@ class CompanyServiceTest {
             assertEquals("Thoughtworks", tempCompany.getName());
             return true;
         }));
+    }
+
+    @Test
+    void should_paged_companies_when_get_companies_by_page_given_company_service_and_pageNumber_and_pageSize() {
+        // Given
+        int pageNumber = 1;
+        int pageSize = 1;
+        Company company = new Company(1L, "OOCL");
+        Page<Company> pagedCompany = new PageImpl<>(List.of(company));
+        when(mockedCompanyJPARepository.findAll(PageRequest.of(0, pageSize))).thenReturn(pagedCompany);
+
+        // When
+        List<Company> pagedCompanies = companyService.findByPage(pageNumber, pageSize);
+
+        // Then
+        assertEquals(pagedCompanies.get(0).getId(), company.getId());
+        assertEquals(pagedCompanies.get(0).getName(), company.getName());
     }
 }
