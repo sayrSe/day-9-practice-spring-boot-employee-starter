@@ -27,7 +27,7 @@ class CompanyServiceTest {
     }
 
     @Test
-    void should_return_all_companies_when_get_companies_given_companies_service() {
+    void should_return_all_companies_when_get_companies_given_company_jpa_service() {
         // Given
         Company company = new Company(1L, "OOCL");
         List<Company> companies = List.of(company);
@@ -42,7 +42,7 @@ class CompanyServiceTest {
     }
 
     @Test
-    void should_return_the_company_when_get_company_given_company_service_and_an_company_id() {
+    void should_return_the_company_when_get_company_given_company_jpa_service_and_an_company_id() {
         // Given
         Company company = new Company(1L, "OOCL");
         when(mockedCompanyJPARepository.findById(company.getId())).thenReturn(Optional.of(company));
