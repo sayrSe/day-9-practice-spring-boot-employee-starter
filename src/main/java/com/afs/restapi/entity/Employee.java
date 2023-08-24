@@ -16,6 +16,8 @@ public class Employee {
     private String gender;
     private Integer salary;
     private Long companyId;
+    public static final int MIN_VALID_AGE = 18;
+    public static final int MAX_VALID_AGE = 65;
 
     public Employee() {
     }
@@ -74,5 +76,9 @@ public class Employee {
 
     public void setCompanyId(Long companyId) {
         this.companyId = companyId;
+    }
+
+    public boolean hasInvalidAge() {
+        return getAge() < MIN_VALID_AGE || getAge() > MAX_VALID_AGE;
     }
 }

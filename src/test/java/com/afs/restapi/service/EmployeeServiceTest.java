@@ -1,6 +1,7 @@
 package com.afs.restapi.service;
 
 import com.afs.restapi.entity.Employee;
+import com.afs.restapi.exception.EmployeeCreateException;
 import com.afs.restapi.repository.EmployeeJPARepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -9,6 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -94,5 +96,16 @@ class EmployeeServiceTest {
         assertEquals(20, employeeResponse.getAge());
         assertEquals("Female", employeeResponse.getGender());
         assertEquals(3000, employeeResponse.getSalary());
+    }
+
+    @Test
+    void should_throw_exception_when_create_given_employee_service_and_employee_whose_age_is_less_than_18() {
+        // Given
+        Employee employee = new Employee(null, "Lucy", 17, "Female", 3000);
+
+        // When, Then
+        EmployeeCreateException employeeCreateException = assertThrows(EmployeeCreateException.class, () ->
+                employeeService.create(employee));
+        assertEquals("Employee must be 18~65 years old", employeeCreateException.getMessage());
     }
 }
