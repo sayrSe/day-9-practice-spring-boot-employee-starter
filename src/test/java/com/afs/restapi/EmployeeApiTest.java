@@ -2,7 +2,6 @@ package com.afs.restapi;
 
 import com.afs.restapi.entity.Employee;
 import com.afs.restapi.repository.EmployeeJPARepository;
-import com.afs.restapi.repository.InMemoryEmployeeRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -25,9 +24,6 @@ class EmployeeApiTest {
 
     @Autowired
     private MockMvc mockMvc;
-
-    @Autowired
-    private InMemoryEmployeeRepository inMemoryEmployeeRepository;
 
     @Autowired
     private EmployeeJPARepository employeeJPARepository;
