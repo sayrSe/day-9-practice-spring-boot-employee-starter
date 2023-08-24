@@ -11,9 +11,6 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.mockito.ArgumentMatchers.argThat;
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 
 class CompanyServiceTest {
@@ -88,5 +85,20 @@ class CompanyServiceTest {
 
         // Then
         verify(mockedCompanyJPARepository, times(1)).deleteById(company.getId());
+    }
+
+    @Test
+    void should_return_created_company_when_create_given_company_jpa_service_and_company() {
+        // Given
+        Company company = new Company(1L, "OOCL");
+        Company savedCompany = new Company(1L, "OOCL");
+        when(mockedCompanyJPARepository.save(company)).thenReturn(savedCompany);
+
+        // When
+        Company companyResponse = companyService.create(company);
+
+        // Then
+        assertEquals(savedCompany.getId(), companyResponse.getId());
+        assertEquals("OOCL", companyResponse.getName());
     }
 }
