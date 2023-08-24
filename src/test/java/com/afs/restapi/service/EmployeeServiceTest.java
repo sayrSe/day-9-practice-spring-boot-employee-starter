@@ -77,4 +77,22 @@ class EmployeeServiceTest {
         assertEquals(alice.getGender(), foundEmployees.get(0).getGender());
         assertEquals(alice.getSalary(), foundEmployees.get(0).getSalary());
     }
+
+    @Test
+    void should_return_created_employee_when_create_given_employee_jpa_service_and_employee_with_valid_age() {
+        // Given
+        Employee employee = new Employee(null, "Lucy", 20, "Female", 3000);
+        Employee savedEmployee = new Employee(1L, "Lucy", 20, "Female", 3000);
+        when(mockedEmployeeJPARepository.save(employee)).thenReturn(savedEmployee);
+
+        // When
+        Employee employeeResponse = employeeService.create(employee);
+
+        // Then
+        assertEquals(savedEmployee.getId(), employeeResponse.getId());
+        assertEquals("Lucy", employeeResponse.getName());
+        assertEquals(20, employeeResponse.getAge());
+        assertEquals("Female", employeeResponse.getGender());
+        assertEquals(3000, employeeResponse.getSalary());
+    }
 }
