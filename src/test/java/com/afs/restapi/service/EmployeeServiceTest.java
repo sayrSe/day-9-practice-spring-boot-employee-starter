@@ -9,8 +9,7 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.Mockito.*;
@@ -118,6 +117,18 @@ class EmployeeServiceTest {
         EmployeeCreateException employeeCreateException = assertThrows(EmployeeCreateException.class, () ->
                 employeeService.create(employee));
         assertEquals("Employee must be 18~65 years old", employeeCreateException.getMessage());
+    }
+
+    @Test
+    void should_delete_one_time_when_delete_given_employee_jpa_service_and_active_employee() {
+        // Given
+        Employee employee = new Employee(null, "Lucy", 20, "Female", 3000);
+
+        // When
+        employeeService.delete(employee.getId());
+
+        // Then
+        verify(mockedEmployeeJPARepository, times(1)).deleteById(employee.getId());
     }
 
     @Test
