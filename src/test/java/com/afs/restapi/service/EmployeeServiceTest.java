@@ -158,11 +158,11 @@ class EmployeeServiceTest {
     @Test
     void should_paged_employees_when_get_employees_by_page_given_employee_jpa_service_and_pageNumber_and_pageSize() {
         // Given
-        int pageNumber = 2;
+        int pageNumber = 1;
         int pageSize = 1;
         Employee alice = new Employee(null, "Alice", 24, "Female", 9000);
         Page<Employee> secondEmployee = new PageImpl<>(List.of(alice));
-        when(mockedEmployeeJPARepository.findAll(PageRequest.of(pageNumber - 1, pageSize))).thenReturn(secondEmployee);
+        when(mockedEmployeeJPARepository.findAll(PageRequest.of(0, pageSize))).thenReturn(secondEmployee);
 
         // When
         List<Employee> pagedEmployees = employeeService.findByPage(pageNumber, pageSize);
