@@ -10,4 +10,6 @@ import java.util.List;
 public interface EmployeeJPARepository extends JpaRepository<Employee, Long> {
 
     List<Employee> findAllByGender(String gender);
+
+    List<Employee> findByCompanyId(Long id);
 }
