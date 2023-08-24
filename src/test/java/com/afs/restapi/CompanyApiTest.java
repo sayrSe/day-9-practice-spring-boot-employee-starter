@@ -15,7 +15,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -117,14 +116,12 @@ class CompanyApiTest {
     void should_find_company_by_id() throws Exception {
         Company company = companyJPARepository.save(getCompany1());
         Employee employee = employeeJPARepository.save(getEmployee(company));
-        company.setEmployees(List.of(employee));
-        companyJPARepository.save(company);
 
         mockMvc.perform(get("/companies/{id}", company.getId()))
                 .andExpect(MockMvcResultMatchers.status().is(200))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(company.getId()))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.name").value(company.getName()))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.employees.length()").value(company.getEmployees().size()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.employees.length()").value(1))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.employees[0].id").value(employee.getId()))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.employees[0].name").value(employee.getName()))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.employees[0].age").value(employee.getAge()))
