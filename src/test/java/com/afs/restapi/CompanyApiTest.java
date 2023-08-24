@@ -15,6 +15,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -69,8 +70,10 @@ class CompanyApiTest {
     }
 
     @Test
-    void should_create_employee() throws Exception {
+    void should_create_company() throws Exception {
         Company company = getCompany1();
+        company.setEmployees(new ArrayList<>());
+        Company savedCompany = companyJPARepository.save(company);
 
         ObjectMapper objectMapper = new ObjectMapper();
         String companyRequest = objectMapper.writeValueAsString(company);
@@ -78,8 +81,8 @@ class CompanyApiTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(companyRequest))
                 .andExpect(MockMvcResultMatchers.status().is(201))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(1L))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.name").value(company.getName()));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(savedCompany.getId()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.name").value(savedCompany.getName()));
     }
 
     @Test
