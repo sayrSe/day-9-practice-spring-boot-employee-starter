@@ -98,7 +98,7 @@ class EmployeeServiceTest {
     }
 
     @Test
-    void should_throw_exception_when_create_given_employee_service_and_employee_whose_age_is_less_than_18() {
+    void should_throw_exception_when_create_given_employee_jpa_service_and_employee_whose_age_is_less_than_18() {
         // Given
         Employee employee = new Employee(null, "Lucy", 17, "Female", 3000);
 
@@ -109,7 +109,7 @@ class EmployeeServiceTest {
     }
 
     @Test
-    void should_throw_exception_when_create_given_employee_service_and_employee_whose_age_is_greater_than_65() {
+    void should_throw_exception_when_create_given_employee_jpa_service_and_employee_whose_age_is_greater_than_65() {
         // Given
         Employee employee = new Employee(null, "Lucy", 70, "Female", 3000);
 
@@ -132,7 +132,7 @@ class EmployeeServiceTest {
     }
 
     @Test
-    void should_return_updated_employee_when_update_given_employee_age_and_salary() {
+    void should_return_updated_employee_when_update_given_employee_jpa_service_employee_age_and_salary() {
         // Given
         Employee employee = new Employee(1L, "Lucy", 20, "Female", 3000);
         Employee updatedEmployeeInfo = new Employee(null, null, 30, null, 10000);
