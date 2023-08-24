@@ -5,11 +5,15 @@ import com.afs.restapi.exception.EmployeeCreateException;
 import com.afs.restapi.repository.EmployeeJPARepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.Mockito.*;
@@ -149,5 +153,26 @@ class EmployeeServiceTest {
             assertEquals(10000, tempEmployee.getSalary());
             return true;
         }));
+    }
+
+    @Test
+    void should_paged_employees_when_get_employees_by_page_given_employee_jpa_service_and_pageNumber_and_pageSize() {
+        // Given
+        int pageNumber = 2;
+        int pageSize = 1;
+        Employee alice = new Employee(null, "Alice", 24, "Female", 9000);
+        Page<Employee> secondEmployee = new PageImpl<>(List.of(alice));
+        when(mockedEmployeeJPARepository.findAll(PageRequest.of(pageNumber - 1, pageSize))).thenReturn(secondEmployee);
+
+        // When
+        List<Employee> pagedEmployees = employeeService.findByPage(pageNumber, pageSize);
+
+        // Then
+        assertEquals(pagedEmployees.size(), pageSize);
+        assertEquals(pagedEmployees.get(0).getId(), alice.getId());
+        assertEquals(pagedEmployees.get(0).getName(), alice.getName());
+        assertEquals(pagedEmployees.get(0).getAge(), alice.getAge());
+        assertEquals(pagedEmployees.get(0).getGender(), alice.getGender());
+        assertEquals(pagedEmployees.get(0).getSalary(), alice.getSalary());
     }
 }
